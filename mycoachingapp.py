@@ -37,7 +37,7 @@ if "step" not in st.session_state:
     st.session_state.step = 1
 if "name" not in st.session_state:
     st.session_state.name = ""
-if "avatar" not in st.session_state:
+if "avatar" not in st.session_state or st.session_state.avatar not in avatars:
     st.session_state.avatar = avatars[0]  # Valor predeterminado válido
 if "coaching" not in st.session_state:
     st.session_state.coaching = ""
