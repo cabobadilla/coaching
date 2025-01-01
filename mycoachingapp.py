@@ -72,7 +72,14 @@ if st.session_state.step == 3:
         "Coaching Deportivo": ["Resistencia", "Técnica", "Mentalidad ganadora"],
         "Coaching de Relaciones": ["Comunicación", "Resolución de conflictos", "Empatía"]
     }
-    st.multiselect("Elige las áreas que deseas trabajar:", areas_disponibles[st.session_state.coaching], key="areas")
+
+    if st.session_state.coaching in areas_disponibles:
+        st.multiselect("Elige las áreas que deseas trabajar:", areas_disponibles[st.session_state.coaching], key="areas")
+    else:
+        st.error("Por favor, selecciona un tipo de coaching válido antes de continuar.")
+        if st.button("Atrás", key="back_to_step_2"):
+            st.session_state.step = 2
+
     if st.button("Siguiente", key="next_step_3"):
         if st.session_state.areas:
             st.session_state.step = 4
