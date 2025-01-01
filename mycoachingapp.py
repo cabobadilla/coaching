@@ -9,8 +9,8 @@ if not openai.api_key:
     st.error("No se encontró la API Key. Por favor, configura la variable de entorno 'OPENAI_API_KEY' con tu clave API de OpenAI.")
 
 # Función para generar un plan personalizado
-def generar_plan_personalizado(nombre, avatar, coaching, areas):
-    prompt = f"Soy un coach experto. Un usuario llamado {nombre} ha seleccionado el coaching de tipo '{coaching}' y desea trabajar en las siguientes áreas: {', '.join(areas)}. Diseña un plan personalizado con dos secciones: una estrategia general y un trabajo práctico para cada área, incorporando el nombre del usuario y refiriéndose al avatar seleccionado ({avatar})."
+def generar_plan_personalizado(nombre, coaching, areas):
+    prompt = f"Soy un coach experto. Un usuario llamado {nombre} ha seleccionado el coaching de tipo '{coaching}' y desea trabajar en las siguientes áreas: {', '.join(areas)}. Diseña un plan personalizado con dos secciones: una estrategia general y un trabajo práctico para cada área, incorporando el nombre del usuario."
     try:
         respuesta = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -26,35 +26,26 @@ def generar_plan_personalizado(nombre, avatar, coaching, areas):
         st.error(f"Error al generar el plan: {e}")
         return None
 
-# Avatares
-avatars = [
-    "Avatar 1", "Avatar 2", "Avatar 3", "Avatar 4", "Avatar 5",
-    "Avatar 6", "Avatar 7", "Avatar 8", "Avatar 9", "Avatar 10"
-]
-
 # Configuración de la app
 if "step" not in st.session_state:
     st.session_state.step = 1
 if "name" not in st.session_state:
     st.session_state.name = ""
-if "avatar" not in st.session_state or st.session_state.avatar not in avatars:
-    st.session_state.avatar = avatars[0]  # Valor predeterminado válido
 if "coaching" not in st.session_state:
     st.session_state.coaching = ""
 if "areas" not in st.session_state:
     st.session_state.areas = []
 
-# Paso 1: Introducción de nombre y avatar
+# Paso 1: Introducción de nombre
 if st.session_state.step == 1:
     st.title("¡Bienvenido a tu Asistente de Coaching!")
     st.header("Paso 1: Tu información personal")
     st.text_input("Escribe tu nombre completo:", key="name")
-    st.selectbox("Elige tu avatar:", avatars, key="avatar")
     if st.button("Siguiente"):
-        if st.session_state.name and st.session_state.avatar:
+        if st.session_state.name:
             st.session_state.step = 2
         else:
-            st.warning("Por favor, completa tu nombre y selecciona un avatar.")
+            st.warning("Por favor, completa tu nombre.")
 
 # Paso 2: Selección de coaching
 if st.session_state.step == 2:
@@ -96,7 +87,6 @@ if st.session_state.step == 4:
     st.header("Paso 4: Plan Personalizado")
     plan = generar_plan_personalizado(
         st.session_state.name,
-        st.session_state.avatar,
         st.session_state.coaching,
         st.session_state.areas
     )
