@@ -98,6 +98,7 @@ if st.session_state.step == 4:
         st.session_state.areas
     )
     if plan:
+        st.write(f"**Estimado/a {st.session_state.name}, este es tu plan personalizado:**")
         st.write(plan)
     if st.button("Atrás", key="back_step_4"):
         st.session_state.step = 3
