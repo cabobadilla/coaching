@@ -41,7 +41,7 @@ if st.session_state.step == 1:
     st.title("¡Bienvenido a tu Asistente de Coaching!")
     st.header("Paso 1: Tu información personal")
     st.text_input("Escribe tu nombre completo:", key="name")
-    if st.button("Siguiente"):
+    if st.button("Siguiente", key="next_step_1"):
         if st.session_state.name:
             st.session_state.step = 2
         else:
@@ -53,12 +53,12 @@ if st.session_state.step == 2:
     st.header("Paso 2: Tipo de Coaching")
     tipos_coaching = ["Coaching Personal", "Coaching Profesional", "Coaching de Salud", "Coaching Deportivo", "Coaching de Relaciones"]
     st.selectbox("Elige un tipo de coaching:", tipos_coaching, key="coaching")
-    if st.button("Siguiente"):
+    if st.button("Siguiente", key="next_step_2"):
         if st.session_state.coaching:
             st.session_state.step = 3
         else:
             st.warning("Por favor, selecciona un tipo de coaching.")
-    if st.button("Atrás"):
+    if st.button("Atrás", key="back_step_2"):
         st.session_state.step = 1
 
 # Paso 3: Selección de áreas de interés
@@ -73,12 +73,12 @@ if st.session_state.step == 3:
         "Coaching de Relaciones": ["Comunicación", "Resolución de conflictos", "Empatía"]
     }
     st.multiselect("Elige las áreas que deseas trabajar:", areas_disponibles[st.session_state.coaching], key="areas")
-    if st.button("Siguiente"):
+    if st.button("Siguiente", key="next_step_3"):
         if st.session_state.areas:
             st.session_state.step = 4
         else:
             st.warning("Por favor, selecciona al menos un área de interés.")
-    if st.button("Atrás"):
+    if st.button("Atrás", key="back_step_3"):
         st.session_state.step = 2
 
 # Paso 4: Mostrar plan personalizado
@@ -92,7 +92,7 @@ if st.session_state.step == 4:
     )
     if plan:
         st.write(plan)
-    if st.button("Atrás"):
+    if st.button("Atrás", key="back_step_4"):
         st.session_state.step = 3
 
 # Instrucciones para ejecutar la app
