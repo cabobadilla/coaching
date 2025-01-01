@@ -10,7 +10,7 @@ if not openai.api_key:
 
 # Función para generar un plan personalizado
 def generar_plan_personalizado(nombre, coaching, areas):
-    prompt = f"Soy un coach experto. Un usuario llamado {nombre} ha seleccionado el coaching de tipo '{coaching}' y desea trabajar en las siguientes áreas: {', '.join(areas)}. Diseña un plan personalizado con dos secciones: una estrategia general y un trabajo práctico para cada área, incorporando el nombre del usuario."
+    prompt = f"Soy un coach experto. Un usuario llamado {nombre} ha seleccionado el coaching de tipo '{coaching}' y desea trabajar en las siguientes áreas: {', '.join(areas)}. Diseña un plan personalizado con dos secciones: una estrategia general y un trabajo práctico para cada área, incorporando el nombre del usuario de forma personalizada en el plan."
     try:
         respuesta = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
