@@ -23,7 +23,8 @@ def generar_plan_personalizado(nombre, avatar, coaching, areas):
         )
         return respuesta['choices'][0]['message']['content'].strip()
     except Exception as e:
-        return f"Error al generar el plan: {e}"
+        st.error(f"Error al generar el plan: {e}")
+        return None
 
 # Avatares
 avatars = [
@@ -37,7 +38,7 @@ if "step" not in st.session_state:
 if "name" not in st.session_state:
     st.session_state.name = ""
 if "avatar" not in st.session_state:
-    st.session_state.avatar = ""
+    st.session_state.avatar = avatars[0]  # Valor predeterminado válido
 if "coaching" not in st.session_state:
     st.session_state.coaching = ""
 if "areas" not in st.session_state:
@@ -99,7 +100,8 @@ if st.session_state.step == 4:
         st.session_state.coaching,
         st.session_state.areas
     )
-    st.write(plan)
+    if plan:
+        st.write(plan)
     if st.button("Atrás"):
         st.session_state.step = 3
 
